@@ -4,30 +4,30 @@ const transactionSchema = mongoose.Schema(
   {
     userid: {
       type: String,
-      require: true,
+      required: true,
     },
     type: {
       type: String,
-      require: true,
+      required: true,
     },
     amount: {
       type: Number,
-      require: [true, "Amount is required"],
+      required: [true, "Amount is required"],
     },
     category: {
       type: String,
-      require: [true, "Category is required"],
+      required: [true, "Category is required"],
     },
     reference: {
       type: String,
     },
     description: {
       type: String,
-      require: [true, "Desc is required"],
+      required: [true, "Desc is required"],
     },
     date: {
-      type: String,
-      require: [true, "Date is required"],
+      type: Date,
+      required: [true, "Date is required"],
     },
   },
   {
