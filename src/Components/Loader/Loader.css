@@ -1,0 +1,10 @@
+.loader{
+width: 5vw;
+position: absolute;
+left: 48%;
+top: 5%;
+color: white;
+}
+.spinner-color{
+color: #BB9AF3;
+}

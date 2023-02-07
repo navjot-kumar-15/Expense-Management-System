@@ -1,0 +1,24 @@
+.filters{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    left: 25%;
+    top: 15%;
+    padding: 1rem;
+    width: 50vw;
+    /* border: 1px solid red; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.content-page{
+    transform: translateY(10rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    /* border: 1px solid red ; */
+}
+.content-page .table-content{
+   width: 80vw;
+}
