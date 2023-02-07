@@ -13,6 +13,7 @@ function Header() {
     }
   }, []);
 
+  // Logout function
   const handleLogout = () => {
     localStorage.removeItem("users");
     message.success("Logout Successfully");
