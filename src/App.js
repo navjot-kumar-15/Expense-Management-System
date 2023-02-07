@@ -26,7 +26,8 @@ function App() {
   );
 }
 
-export function ProtectedRoute() {``
+export function ProtectedRoute() {
+  ``;
   if (localStorage.getItem("users")) {
     return <HomePage />;
   } else {
