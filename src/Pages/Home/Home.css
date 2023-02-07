@@ -2,17 +2,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    left: 25%;
-    top: 15%;
+    margin: 1rem;
     padding: 1rem;
-    width: 50vw;
-    /* border: 1px solid red; */
+    margin-top: 6rem;
+    transform: translateX(8.8rem);
+    width: 80vw;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 1rem;
 }
 
 .content-page{
-    transform: translateY(10rem);
+    transform: translateY(3rem);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,4 +21,7 @@
 }
 .content-page .table-content{
    width: 80vw;
+}
+.option-select{
+    width:8vw;
 }

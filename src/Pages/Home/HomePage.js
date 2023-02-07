@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { Form, message, Modal, Select, Table } from "antd";
+import { Form, message, Modal, Select, Table, DatePicker } from "antd";
 import Layout from "../../Components/Layout/Layout";
 import FormItem from "antd/es/form/FormItem";
 import Input from "antd/es/input/Input";
 import axios from "axios";
 import Loading from "../../Components/Loader/Loading";
+import moment from "moment";
+const { RangePicker } = DatePicker;
 
 function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allTransaction, setAllTransaction] = useState([]);
+  const [frequency, setFrequency] = useState("7");
+  const [selectedDate, setSelectedDate] = useState([]);
+  const [type, setType] = useState("all");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -25,6 +30,7 @@ function HomePage() {
     {
       title: "Date",
       dataIndex: "date",
+      render: (text) => <span>{moment(text).format("YYYY-MM-DD")}</span>,
     },
     {
       title: "Amount",
@@ -69,34 +75,72 @@ function HomePage() {
     }
   };
 
-  // Get all the transactions
-  const getAllTransactions = async () => {
-    try {
-      const user = JSON.parse(localStorage.getItem("users"));
-      setLoading(true);
-      const res = await axios.post("/transaction/get-transaction", {
-        userid: user._id,
-      });
-      setLoading(false);
-      setAllTransaction(res.data);
-      console.log(res.data);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      message.error("Fetch Issues With Transaction");
-    }
-  };
-
-  // Use Effect Hook
+  // UseEffect Hook
   useEffect(() => {
+    // Get all the transactions
+    const getAllTransactions = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("users"));
+        setLoading(true);
+        const res = await axios.post("/transaction/get-transaction", {
+          userid: user._id,
+          frequency,
+          selectedDate,
+          type,
+        });
+        setLoading(false);
+        setAllTransaction(res.data);
+        console.log(res.data);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        message.error("Fetch Issues With Transaction");
+      }
+    };
     getAllTransactions();
-  }, []);
+  }, [frequency, selectedDate, type]);
   return (
     <>
       <Layout>
         {loading && <Loading />}
         <div className="filters">
-          <div>range filter</div>
+          <div>
+            <h6>Select Frequency</h6>
+            <Select
+              className="option-select"
+              value={frequency}
+              onChange={(values) => {
+                setFrequency(values);
+              }}
+            >
+              <Select.Option value="7 ">1 Week</Select.Option>
+              <Select.Option value="30">1 Month</Select.Option>
+              <Select.Option value="365">1 Year</Select.Option>
+              <Select.Option value="Custom">Custom</Select.Option>
+            </Select>
+            {frequency === "Custom" && (
+              <RangePicker
+                className="mx-1"
+                value={selectedDate}
+                onChange={(values) => setSelectedDate(values)}
+              />
+            )}
+          </div>
+
+          <div>
+            <h6>Select Type</h6>
+            <Select
+              className="option-select"
+              value={type}
+              onChange={(values) => {
+                setType(values);
+              }}
+            >
+              <Select.Option value="all">All</Select.Option>
+              <Select.Option value="income">INCOME</Select.Option>
+              <Select.Option value="expense">EXPENSE</Select.Option>
+            </Select>
+          </div>
           <div>
             <button className="btn btn-primary" onClick={showModal}>
               Add New{" "}
